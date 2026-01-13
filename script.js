@@ -1,3 +1,5 @@
+// script.js
+
 /* ===== ELEMENTS ===== */
 const musicPage = document.getElementById("musicPage");
 const puzzlePage = document.getElementById("puzzlePage");
@@ -29,6 +31,10 @@ const tracks = {
 const size = 4;
 const pieceSize = 80;
 const total = size * size;
+
+// detect mobile/iOS
+const isTouch =
+  window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window;
 
 let dragged = null;
 let hasMoved = false;
@@ -125,13 +131,14 @@ function initPuzzle() {
   shuffled.forEach((tile) => {
     const piece = document.createElement("div");
     piece.className = "piece";
-    piece.draggable = true;
+    piece.draggable = !isTouch; // iPhone: false
     piece.style.backgroundPosition = tile.pos;
     piece.dataset.tileId = String(tile.id);
     puzzle.appendChild(piece);
   });
 
-    let selected = null;
+  // ✅ Works on iPhone: tap-to-swap (pointerdown)
+  let selected = null;
 
   function swapPieces(a, b) {
     if (!a || !b || a === b) return;
@@ -154,7 +161,7 @@ function initPuzzle() {
   }
 
   document.querySelectorAll(".piece").forEach((p) => {
-    // Desktop drag-drop (tetap jalan di PC)
+    // Desktop drag-drop
     p.addEventListener("dragstart", () => (dragged = p));
     p.addEventListener("dragover", (e) => e.preventDefault());
     p.addEventListener("drop", function () {
@@ -162,8 +169,10 @@ function initPuzzle() {
       swapPieces(dragged, this);
     });
 
-    // Mobile tap-to-swap (ini yang bikin HP bisa main)
-    p.addEventListener("click", () => {
+    // Mobile/iOS
+    p.addEventListener("pointerdown", (e) => {
+      if (isTouch) e.preventDefault();
+
       if (!selected) {
         selected = p;
         p.classList.add("active");
@@ -171,14 +180,8 @@ function initPuzzle() {
         swapPieces(selected, p);
       }
     });
-
-    // Biar iOS/Android lebih responsif (sentuh)
-    p.addEventListener("touchstart", (e) => {
-      e.preventDefault();
-      p.click();
-    }, { passive: false });
   });
-
+}
 
 function checkWin() {
   if (!hasMoved || modalShown) return;
@@ -236,11 +239,7 @@ const counterEl = document.getElementById("counter");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn2 = document.getElementById("nextBtn2");
 
-/* ===== CAPTIONS (ISI DI SINI) =====
-   - p01..p38 untuk foto
-   - v01..v13 untuk video
-   Isi bebas. Kalau kosong "", nanti caption ga tampil apa-apa.
-*/
+/* ===== CAPTIONS (ISI DI SINI) ===== */
 const captions = {
   // FOTO
   p01: "WKWKWKWKKWWK ANAK SIAPA INI KEK ANAK ILANG",
@@ -333,7 +332,7 @@ function videoRange(a, b) {
   return arr;
 }
 
-/* ===== FINAL ORDER (video tambahan setelah video 3) ===== */
+/* ===== FINAL ORDER ===== */
 const slides = [
   ...photoRange(1, 4),
   video(1),
@@ -344,12 +343,10 @@ const slides = [
   ...photoRange(9, 11),
   video(3),
 
-  // ✅ video tambahan setelah video 3
   video(4),
 
   ...photoRange(12, 14),
 
-  // video 5–9
   ...videoRange(5, 9),
 
   ...photoRange(15, 22),
@@ -403,7 +400,6 @@ function renderSlide(i) {
 
   stage.appendChild(el);
 
-  // caption & counter
   if (captionEl) captionEl.textContent = s.caption || "";
   if (counterEl) counterEl.textContent = `${i + 1} / ${slides.length}`;
 }
