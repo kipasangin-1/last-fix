@@ -1,22 +1,4 @@
 // script.js
-/* ===== PERSIST (REFRESH RESUME) ===== */
-const STORAGE_KEY = "last_state_v1";
-
-function saveState(patch = {}) {
-  try {
-    const prev = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-    const next = { ...prev, ...patch, t: Date.now() };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-  } catch {}
-}
-
-function loadState() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-  } catch {
-    return {};
-  }
-}
 
 /* ===== ELEMENTS ===== */
 const musicPage = document.getElementById("musicPage");
@@ -36,6 +18,25 @@ const status = document.getElementById("status");
 const winModal = document.getElementById("winModal");
 const stayBtn = document.getElementById("stayBtn");
 const nextBtn = document.getElementById("nextBtn");
+
+/* ===== PERSIST (REFRESH RESUME) ===== */
+const STORAGE_KEY = "last_state_v1";
+
+function saveState(patch = {}) {
+  try {
+    const prev = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+    const next = { ...prev, ...patch, t: Date.now() };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  } catch {}
+}
+
+function loadState() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
 
 /* ===== BACKGROUND CONTROL ===== */
 function setBg(name) {
@@ -61,294 +62,6 @@ const isTouch =
 let dragged = null;
 let hasMoved = false;
 let modalShown = false;
-
-/* ===== RESET (anti nyangkut) ===== */
-(function init() {
-  // amanin modal selalu mati dulu
-  winModal.classList.add("hidden");
-  winModal.style.display = "none";
-
-  // reset tampilan dasar (nanti dipilih lagi sesuai state)
-  musicPage.classList.add("hidden");
-  puzzlePage.classList.add("hidden");
-  contentPage.classList.add("hidden");
-
-  puzzle.innerHTML = "";
-  status.textContent = "";
-
-  // tombol lanjut ke letter: hidden dulu (nanti muncul kalau slide terakhir)
-  if (toLetterBtn) toLetterBtn.classList.add("hidden");
-
-  // ===== RESUME STATE =====
-  const st = loadState();
-  const page = st.page || "music"; // music | puzzle | content | letter
-
-  // set background sesuai page
-  if (page === "music") setBg("music.jpg");
-  if (page === "puzzle") setBg("puzzle.jpg");
-  if (page === "content" || page === "letter") setBg("content.jpg");
-
-  if (page === "music") {
-    musicPage.classList.remove("hidden");
-  } else if (page === "puzzle") {
-    puzzlePage.classList.remove("hidden");
-    initPuzzle();
-  } else if (page === "content") {
-    contentPage.classList.remove("hidden");
-    initCarouselIfNeeded();
-
-    // set slide terakhir yang dibuka
-    if (typeof st.slideIndex === "number") {
-      current = Math.max(0, Math.min(slides.length - 1, st.slideIndex));
-      renderSlide(current);
-    }
-  } else if (page === "letter") {
-    contentPage.classList.remove("hidden");
-    initCarouselIfNeeded();
-
-    // set slide terakhir yang dibuka (tetap simpan)
-    if (typeof st.slideIndex === "number") {
-      current = Math.max(0, Math.min(slides.length - 1, st.slideIndex));
-      renderSlide(current);
-    }
-
-    // mode letter (tanpa hide contentPage karena letterPage ada di dalamnya)
-    const carousel = contentPage.querySelector(".carousel");
-    const meta = contentPage.querySelector(".meta");
-    const divider = contentPage.querySelector(".divider");
-    if (carousel) carousel.classList.add("hidden");
-    if (meta) meta.classList.add("hidden");
-    if (divider) divider.classList.add("hidden");
-    if (toLetterBtn) toLetterBtn.classList.add("hidden");
-
-    letterPage.classList.remove("hidden");
-  } else {
-    // fallback
-    musicPage.classList.remove("hidden");
-    setBg("music.jpg");
-  }
-})();
-
-// tombol lanjut ke letter: sembunyi dulu (baru muncul di slide terakhir)
-if (toLetterBtn) {
-  toLetterBtn.addEventListener("click", () => {
-    // ✅ SIMPAN BIAR KALO REFRESH TETEP DI LETTER
-    saveState({ page: "letter", slideIndex: current });
-
-    const carousel = contentPage.querySelector(".carousel");
-    const meta = contentPage.querySelector(".meta");
-    const divider = contentPage.querySelector(".divider");
-
-    if (carousel) carousel.classList.add("hidden");
-    if (meta) meta.classList.add("hidden");
-    if (divider) divider.classList.add("hidden");
-    toLetterBtn.classList.add("hidden");
-
-    letterPage.classList.remove("hidden");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-}
-
-/* ===== MUSIC PICK ===== */
-document.querySelectorAll(".music-btn").forEach((btn) => {
-  btn.addEventListener("click", async () => {
-    const key = btn.dataset.track;
-    const src = tracks[key];
-    if (!src) return;
-
-    document
-      .querySelectorAll(".music-btn")
-      .forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-
-    bgm.src = src;
-    bgm.volume = 0.35;
-
-    try {
-      await bgm.play();
-    } catch {}
-
-    continueBtn.disabled = false;
-  });
-});
-
-/* ===== NAV: MUSIC -> PUZZLE ===== */
-continueBtn.addEventListener("click", () => {
-  musicPage.classList.add("hidden");
-  puzzlePage.classList.remove("hidden");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-
-  setBg("puzzle.jpg");
-  initPuzzle();
-});
-
-/* ===== PUZZLE LOGIC ===== */
-function makeTiles() {
-  const tiles = [];
-  for (let i = 0; i < total; i++) {
-    const x = (i % size) * pieceSize;
-    const y = Math.floor(i / size) * pieceSize;
-    tiles.push({ id: i, pos: `-${x}px -${y}px` });
-  }
-  return tiles;
-}
-
-function shuffle(arr) {
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
-  }
-  return arr;
-}
-
-function isSolvedIds(ids) {
-  return ids.every((id, idx) => id === idx);
-}
-
-function initPuzzle() {
-  if (puzzle.children.length > 0) return;
-
-  dragged = null;
-  hasMoved = false;
-  modalShown = false;
-  status.textContent = "";
-
-  const correct = makeTiles();
-  let shuffled = shuffle([...correct]);
-
-  let guard = 0;
-  while (isSolvedIds(shuffled.map((t) => t.id)) && guard < 80) {
-    shuffled = shuffle([...correct]);
-    guard++;
-  }
-
-  shuffled.forEach((tile) => {
-    const piece = document.createElement("div");
-    piece.className = "piece";
-    piece.draggable = !isTouch; // iPhone: false
-    piece.style.backgroundPosition = tile.pos;
-    piece.dataset.tileId = String(tile.id);
-    puzzle.appendChild(piece);
-  });
-
-  // ✅ Works on iPhone: tap-to-swap (pointerdown)
-  let selected = null;
-
-  function swapPieces(a, b) {
-    if (!a || !b || a === b) return;
-
-    hasMoved = true;
-
-    const tmpBg = a.style.backgroundPosition;
-    a.style.backgroundPosition = b.style.backgroundPosition;
-    b.style.backgroundPosition = tmpBg;
-
-    const tmpId = a.dataset.tileId;
-    a.dataset.tileId = b.dataset.tileId;
-    b.dataset.tileId = tmpId;
-
-    a.classList.remove("active");
-    b.classList.remove("active");
-    selected = null;
-
-    checkWin();
-  }
-
-  document.querySelectorAll(".piece").forEach((p) => {
-    // Desktop drag-drop
-    p.addEventListener("dragstart", () => (dragged = p));
-    p.addEventListener("dragover", (e) => e.preventDefault());
-    p.addEventListener("drop", function () {
-      if (!dragged || dragged === this) return;
-      swapPieces(dragged, this);
-    });
-
-    // Mobile/iOS
-    p.addEventListener("pointerdown", (e) => {
-      if (isTouch) e.preventDefault();
-
-      if (!selected) {
-        selected = p;
-        p.classList.add("active");
-      } else {
-        swapPieces(selected, p);
-      }
-    });
-  });
-}
-
-function checkWin() {
-  if (!hasMoved || modalShown) return;
-
-  const pieces = document.querySelectorAll(".piece");
-  const solved = [...pieces].every(
-    (p, idx) => Number(p.dataset.tileId) === idx
-  );
-
-  if (solved) {
-    modalShown = true;
-    status.textContent = "Udah lengkap.";
-    showModal();
-  } else {
-    status.textContent = "";
-  }
-}
-
-function showModal() {
-  winModal.classList.remove("hidden");
-  winModal.style.display = "grid";
-  document.querySelectorAll(".piece").forEach((p) => (p.draggable = false));
-}
-
-/* ===== MODAL BUTTONS ===== */
-let teased = false;
-
-stayBtn.addEventListener("click", () => {
-  const modalText = document.getElementById("modalText");
-  if (!modalText) return;
-
-  if (!teased) {
-    modalText.textContent = "ah dah lanjut aja";
-    modalText.style.animation = "pop 300ms ease";
-    teased = true;
-  }
-});
-
-nextBtn.addEventListener("click", () => {
-  winModal.classList.add("hidden");
-  winModal.style.display = "none";
-
-  puzzlePage.classList.add("hidden");
-  contentPage.classList.remove("hidden");
-  window.scrollTo({ top: 0, behavior: "smooth" });
-
-  setBg("content.jpg");
-  initCarouselIfNeeded();
-});
-
-if (toLetterBtn) {
-  toLetterBtn.addEventListener("click", () => {
-    // jangan hide contentPage, karena letterPage ada di dalamnya
-
-    // sembunyiin bagian konten (carousel + meta + divider + tombol)
-    const carousel = contentPage.querySelector(".carousel");
-    const meta = contentPage.querySelector(".meta");
-    const divider = contentPage.querySelector(".divider");
-
-    if (carousel) carousel.classList.add("hidden");
-    if (meta) meta.classList.add("hidden");
-    if (divider) divider.classList.add("hidden");
-    toLetterBtn.classList.add("hidden");
-
-    // tampilkan letter
-    letterPage.classList.remove("hidden");
-
-    window.scrollTo({ top: 0, behavior: "smooth" });
-
-    // kalau mau background beda, aktifin ini:
-    // setBg("letter.jpg");
-  });
-}
 
 /* ===== CAROUSEL ELEMENTS ===== */
 const stage = document.getElementById("stage");
@@ -488,10 +201,266 @@ let current = 0;
 function updateNextButtonVisibility() {
   if (!toLetterBtn) return;
   const isLast = current === slides.length - 1;
+
   if (isLast) toLetterBtn.classList.remove("hidden");
   else toLetterBtn.classList.add("hidden");
 }
 
+/* ===== disable arrow di ujung ===== */
+function updateArrowButtons() {
+  if (prevBtn) prevBtn.disabled = current === 0;
+  if (nextBtn2) nextBtn2.disabled = current === slides.length - 1;
+}
+
+/* ===== RESET + RESUME ===== */
+(function init() {
+  // modal off dulu
+  winModal.classList.add("hidden");
+  winModal.style.display = "none";
+
+  // reset pages
+  musicPage.classList.add("hidden");
+  puzzlePage.classList.add("hidden");
+  contentPage.classList.add("hidden");
+
+  puzzle.innerHTML = "";
+  status.textContent = "";
+
+  // tombol lanjut letter hidden dulu
+  if (toLetterBtn) toLetterBtn.classList.add("hidden");
+
+  // resume state
+  const st = loadState();
+  const page = st.page || "music"; // music | puzzle | content | letter
+
+  // background
+  if (page === "music") setBg("music.jpg");
+  if (page === "puzzle") setBg("puzzle.jpg");
+  if (page === "content" || page === "letter") setBg("content.jpg");
+
+  if (page === "music") {
+    musicPage.classList.remove("hidden");
+  } else if (page === "puzzle") {
+    puzzlePage.classList.remove("hidden");
+    initPuzzle();
+  } else if (page === "content") {
+    contentPage.classList.remove("hidden");
+    initCarouselIfNeeded();
+
+    if (typeof st.slideIndex === "number") {
+      current = Math.max(0, Math.min(slides.length - 1, st.slideIndex));
+      renderSlide(current);
+    }
+  } else if (page === "letter") {
+    // tampilkan contentPage juga, karena letterPage ada di dalamnya
+    contentPage.classList.remove("hidden");
+    initCarouselIfNeeded();
+
+    if (typeof st.slideIndex === "number") {
+      current = Math.max(0, Math.min(slides.length - 1, st.slideIndex));
+      renderSlide(current);
+    }
+
+    // mode letter: sembunyiin carousel, munculin letter
+    const carousel = contentPage.querySelector(".carousel");
+    const meta = contentPage.querySelector(".meta");
+    const divider = contentPage.querySelector(".divider");
+
+    if (carousel) carousel.classList.add("hidden");
+    if (meta) meta.classList.add("hidden");
+    if (divider) divider.classList.add("hidden");
+    if (toLetterBtn) toLetterBtn.classList.add("hidden");
+
+    letterPage.classList.remove("hidden");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } else {
+    // fallback
+    musicPage.classList.remove("hidden");
+    setBg("music.jpg");
+  }
+})();
+
+/* ===== MUSIC PICK ===== */
+document.querySelectorAll(".music-btn").forEach((btn) => {
+  btn.addEventListener("click", async () => {
+    const key = btn.dataset.track;
+    const src = tracks[key];
+    if (!src) return;
+
+    document
+      .querySelectorAll(".music-btn")
+      .forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+
+    bgm.src = src;
+    bgm.volume = 0.35;
+
+    try {
+      await bgm.play();
+    } catch {}
+
+    continueBtn.disabled = false;
+  });
+});
+
+/* ===== NAV: MUSIC -> PUZZLE ===== */
+continueBtn.addEventListener("click", () => {
+  saveState({ page: "puzzle" });
+
+  musicPage.classList.add("hidden");
+  puzzlePage.classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  setBg("puzzle.jpg");
+  initPuzzle();
+});
+
+/* ===== PUZZLE LOGIC ===== */
+function makeTiles() {
+  const tiles = [];
+  for (let i = 0; i < total; i++) {
+    const x = (i % size) * pieceSize;
+    const y = Math.floor(i / size) * pieceSize;
+    tiles.push({ id: i, pos: `-${x}px -${y}px` });
+  }
+  return tiles;
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function isSolvedIds(ids) {
+  return ids.every((id, idx) => id === idx);
+}
+
+function initPuzzle() {
+  if (puzzle.children.length > 0) return;
+
+  dragged = null;
+  hasMoved = false;
+  modalShown = false;
+  status.textContent = "";
+
+  const correct = makeTiles();
+  let shuffled = shuffle([...correct]);
+
+  let guard = 0;
+  while (isSolvedIds(shuffled.map((t) => t.id)) && guard < 80) {
+    shuffled = shuffle([...correct]);
+    guard++;
+  }
+
+  shuffled.forEach((tile) => {
+    const piece = document.createElement("div");
+    piece.className = "piece";
+    piece.draggable = !isTouch; // iPhone: false
+    piece.style.backgroundPosition = tile.pos;
+    piece.dataset.tileId = String(tile.id);
+    puzzle.appendChild(piece);
+  });
+
+  let selected = null;
+
+  function swapPieces(a, b) {
+    if (!a || !b || a === b) return;
+
+    hasMoved = true;
+
+    const tmpBg = a.style.backgroundPosition;
+    a.style.backgroundPosition = b.style.backgroundPosition;
+    b.style.backgroundPosition = tmpBg;
+
+    const tmpId = a.dataset.tileId;
+    a.dataset.tileId = b.dataset.tileId;
+    b.dataset.tileId = tmpId;
+
+    a.classList.remove("active");
+    b.classList.remove("active");
+    selected = null;
+
+    checkWin();
+  }
+
+  document.querySelectorAll(".piece").forEach((p) => {
+    // Desktop drag-drop
+    p.addEventListener("dragstart", () => (dragged = p));
+    p.addEventListener("dragover", (e) => e.preventDefault());
+    p.addEventListener("drop", function () {
+      if (!dragged || dragged === this) return;
+      swapPieces(dragged, this);
+    });
+
+    // Mobile/iOS
+    p.addEventListener("pointerdown", (e) => {
+      if (isTouch) e.preventDefault();
+
+      if (!selected) {
+        selected = p;
+        p.classList.add("active");
+      } else {
+        swapPieces(selected, p);
+      }
+    });
+  });
+}
+
+function checkWin() {
+  if (!hasMoved || modalShown) return;
+
+  const pieces = document.querySelectorAll(".piece");
+  const solved = [...pieces].every(
+    (p, idx) => Number(p.dataset.tileId) === idx
+  );
+
+  if (solved) {
+    modalShown = true;
+    status.textContent = "Udah lengkap.";
+    showModal();
+  } else {
+    status.textContent = "";
+  }
+}
+
+function showModal() {
+  winModal.classList.remove("hidden");
+  winModal.style.display = "grid";
+  document.querySelectorAll(".piece").forEach((p) => (p.draggable = false));
+}
+
+/* ===== MODAL BUTTONS ===== */
+let teased = false;
+
+stayBtn.addEventListener("click", () => {
+  const modalText = document.getElementById("modalText");
+  if (!modalText) return;
+
+  if (!teased) {
+    modalText.textContent = "ah dah lanjut aja";
+    modalText.style.animation = "pop 300ms ease";
+    teased = true;
+  }
+});
+
+nextBtn.addEventListener("click", () => {
+  saveState({ page: "content" });
+
+  winModal.classList.add("hidden");
+  winModal.style.display = "none";
+
+  puzzlePage.classList.add("hidden");
+  contentPage.classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  setBg("content.jpg");
+  initCarouselIfNeeded();
+});
+
+/* ===== CAROUSEL ===== */
 function stopAnyVideo() {
   if (!stage) return;
   const v = stage.querySelector("video");
@@ -524,6 +493,10 @@ function renderSlide(i) {
     el.alt = s.caption || "memory";
     el.loading = "lazy";
     el.decoding = "async";
+
+    // hint ukuran biar ga geser2 di hp
+    el.width = 1280;
+    el.height = 720;
   }
 
   stage.appendChild(el);
@@ -532,28 +505,29 @@ function renderSlide(i) {
   if (counterEl) counterEl.textContent = `${i + 1} / ${slides.length}`;
 
   updateNextButtonVisibility();
+  updateArrowButtons();
+
+  // simpan posisi slide (resume pas refresh)
+  saveState({ page: "content", slideIndex: current });
 }
 
+/* stop di ujung (ga looping) */
 function nextSlide() {
-  // ✅ kalau udah slide terakhir, jangan lanjut lagi
   if (current >= slides.length - 1) {
     current = slides.length - 1;
     renderSlide(current);
     return;
   }
-
   current++;
   renderSlide(current);
 }
 
 function prevSlide() {
-  // ✅ kalau udah slide pertama, jangan mundur lagi
   if (current <= 0) {
     current = 0;
     renderSlide(current);
     return;
   }
-
   current--;
   renderSlide(current);
 }
@@ -572,14 +546,34 @@ function initCarouselIfNeeded() {
     if (e.key === "ArrowRight") nextSlide();
   });
 
-  // awalnya hidden, nanti muncul kalau udah sampai slide terakhir
+  // awalnya hidden, nanti muncul kalau slide terakhir
   if (toLetterBtn) toLetterBtn.classList.add("hidden");
 
   renderSlide(current);
 }
 
-console.log("Total slides:", slides.length);
+/* ===== CONTINUE TO LETTER (content -> long text) ===== */
+if (toLetterBtn) {
+  toLetterBtn.addEventListener("click", () => {
+    // simpan state: sekarang di letter
+    saveState({ page: "letter", slideIndex: current });
 
+    // jangan hide contentPage (soalnya letterPage ada di dalamnya)
+    const carousel = contentPage.querySelector(".carousel");
+    const meta = contentPage.querySelector(".meta");
+    const divider = contentPage.querySelector(".divider");
+
+    if (carousel) carousel.classList.add("hidden");
+    if (meta) meta.classList.add("hidden");
+    if (divider) divider.classList.add("hidden");
+    toLetterBtn.classList.add("hidden");
+
+    letterPage.classList.remove("hidden");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
+
+/* ===== LETTER CONTENT ===== */
 const letterHTML = `
   <p>hai sel
 i just wanna say thank u and sorry for everything
@@ -606,6 +600,9 @@ aku ga tau kedepannya bakal gimana, aku cmn bisa pastiin 1 hal, kalau kau ada bu
 aku tau selama kita temenan aku banyak salahnya, maaf ya sel, aku minta maaf atas semua kesalahan yg ku buat ntah itu sengaja ataupun ga sengaja, aku juga minta maaf kalau ketikanku ada yg salah, ntah itu yg kemaren ataupun yg skrg ini juga
 
 makasii banyak yaa sel, makasi karena udah nemenin aku pas aku lagi berantem sama kawanku, makasii banyak karena udah mau jadi temenku sel, makasii buat semua hal yg udah kau lakuin buat aku sel</p>
+
 `;
 
 if (letterEl) letterEl.innerHTML = letterHTML;
+
+console.log("Total slides:", slides.length);
