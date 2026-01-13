@@ -9,53 +9,79 @@
   <body>
     <div class="wrap">
       <!-- 1) MUSIC PAGE -->
-      <div class="card center" id="musicPage">
+      <div class="card center page" id="musicPage">
         <h1>Pilih dulu</h1>
         <p class="sub">Pilih satu aja jgn smw</p>
 
         <div class="music-buttons">
-          <button class="btn ghost music-btn" data-track="song1">
+          <button
+            class="btn ghost music-btn"
+            data-track="song1"
+            aria-label="Pilih lagu End of Beginning"
+          >
             end of beginning
           </button>
-          <button class="btn ghost music-btn" data-track="song2">17</button>
-          <button class="btn ghost music-btn" data-track="song3">
+          <button
+            class="btn ghost music-btn"
+            data-track="song2"
+            aria-label="Pilih lagu 17"
+          >
+            17
+          </button>
+          <button
+            class="btn ghost music-btn"
+            data-track="song3"
+            aria-label="Pilih lagu Someone to Stay"
+          >
             someone to stay
           </button>
         </div>
 
-        <button class="btn" id="continueBtn" disabled>Lanjut</button>
+        <button
+          class="btn"
+          id="continueBtn"
+          disabled
+          aria-label="Lanjut ke puzzle"
+        >
+          Lanjut
+        </button>
       </div>
 
       <!-- 2) PUZZLE PAGE -->
-      <div class="card center hidden" id="puzzlePage">
+      <div class="card center page hidden" id="puzzlePage">
         <p class="sub">susun dulu ini.</p>
 
-        <div class="puzzle" id="puzzle"></div>
-        <p class="status" id="status"></p>
+        <div
+          class="puzzle"
+          id="puzzle"
+          role="application"
+          aria-label="Puzzle 4x4, gunakan klik atau drag untuk menyusun"
+        ></div>
+        <p class="status" id="status" aria-live="polite"></p>
       </div>
 
-      <!-- 3) CONTENT PAGE (placeholder dulu) -->
-      <div class="card hidden" id="contentPage">
+      <!-- 3) CONTENT PAGE -->
+      <div class="card page hidden" id="contentPage">
         <h1>hai</h1>
         <p class="sub">last</p>
 
         <!-- CAROUSEL -->
         <div class="carousel">
-          <button class="cbtn prev" id="prevBtn" aria-label="Sebelumnya">
+          <button class="cbtn prev" id="prevBtn" aria-label="Media sebelumnya">
             ‹
           </button>
 
-          <div class="stage" id="stage">
-            <!-- media dirender dari JS -->
+          <div class="stage" id="stage" role="img" aria-label="Carousel media">
+            <!-- Media dirender dari JS -->
           </div>
 
-          <button class="cbtn next" id="nextBtn2" aria-label="Berikutnya">
+          <button class="cbtn next" id="nextBtn2" aria-label="Media berikutnya">
             ›
           </button>
         </div>
 
         <div class="meta">
-          <div class="caption" id="caption"></div>
+          <div class="caption" id="caption" aria-live="polite"></div>
           <div class="counter" id="counter"></div>
         </div>
 
@@ -67,19 +93,29 @@
     </div>
 
     <!-- MODAL -->
-    <div class="modal hidden" id="winModal">
+    <div
+      class="modal hidden"
+      id="winModal"
+      role="dialog"
+      aria-labelledby="modalTitle"
+      aria-describedby="modalText"
+    >
       <div class="modal-card">
-        <h2>ok</h2>
+        <h2 id="modalTitle">ok</h2>
         <p id="modalText">lanjut y</p>
 
         <div class="modal-actions">
-          <button class="btn ghost" id="stayBtn">gmw</button>
-          <button class="btn" id="nextBtn">y</button>
+          <button class="btn ghost" id="stayBtn" aria-label="Tetap di puzzle">
+            gmw
+          </button>
+          <button class="btn" id="nextBtn" aria-label="Lanjut ke konten">
+            y
+          </button>
         </div>
       </div>
     </div>
 
-    <audio id="bgm" loop></audio>
+    <audio id="bgm" loop preload="none"></audio>
     <script src="script.js"></script>
   </body>
 </html>
