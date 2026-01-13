@@ -1,0 +1,319 @@
+:root {
+  --text: #e5e7eb;
+  --muted: rgba(229, 231, 235, 0.75);
+  --line: rgba(255, 255, 255, 0.12);
+  --card: rgba(255, 255, 255, 0.07);
+  --accent: #38bdf8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+  color: var(--text);
+  line-height: 1.7;
+
+  background-color: #0f172a;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  transition: background-image 400ms ease;
+}
+
+/* overlay gelap biar teks kebaca */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.78);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 70px 18px;
+  display: grid;
+  gap: 22px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 28px 22px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 55px rgba(0, 0, 0, 0.35);
+}
+
+.center {
+  text-align: center;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 34px;
+  letter-spacing: 0.2px;
+}
+
+.sub {
+  margin: 0 0 18px;
+  color: var(--muted);
+}
+
+.status {
+  margin: 14px 0 0;
+  color: var(--muted);
+  min-height: 22px;
+}
+
+.hidden {
+  display: none;
+}
+
+/* buttons */
+.music-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 18px 0;
+}
+
+.btn {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background: var(--accent);
+  color: #06101b;
+  font-weight: 800;
+}
+
+.btn.ghost {
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(229, 231, 235, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.music-btn.active {
+  border: 1px solid rgba(56, 189, 248, 0.75) !important;
+}
+
+/* PUZZLE 4x4 (nyambung, kotak) */
+.puzzle {
+  width: 320px;
+  height: 320px;
+  margin: 18px auto 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  padding: 0;
+  border-radius: 0;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.piece {
+  width: 80px;
+  height: 80px;
+  border-radius: 0;
+  border: 0;
+  background-image: url("assets/puzzle.jpg");
+  background-size: 320px 320px;
+  cursor: grab;
+}
+
+/* MODAL */
+.modal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 9999;
+  padding: 18px;
+}
+
+.modal-card {
+  width: min(420px, 92vw);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 18px;
+  padding: 22px 18px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+  text-align: center;
+}
+
+.modal-card h2 {
+  margin: 0 0 6px;
+  font-size: 22px;
+}
+
+.modal-card p {
+  margin: 0 0 16px;
+  opacity: 0.85;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ===== CONTENT: CAROUSEL ===== */
+.carousel {
+  position: relative;
+  margin: 18px auto 0;
+  width: min(740px, 92vw);
+}
+
+.stage {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stage img,
+.stage video {
+  max-width: 100%;
+  max-height: 80vh; /* biar ga kepanjangan di layar */
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  .stage {
+    background: radial-gradient(
+      rgba(255, 255, 255, 0.08),
+      rgba(255, 255, 255, 0.02)
+    );
+  }
+}
+
+.cbtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(0, 0, 0, 0.35);
+  color: rgba(229, 231, 235, 0.95);
+  cursor: pointer;
+  font-size: 28px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(8px);
+}
+
+.cbtn:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.cbtn.prev {
+  left: 10px;
+}
+.cbtn.next {
+  right: 10px;
+}
+
+.meta {
+  width: min(740px, 92vw);
+  margin: 12px auto 0;
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+}
+
+.caption {
+  color: rgba(229, 231, 235, 0.82);
+  font-size: 14px;
+  text-align: center;
+  max-width: 60ch;
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(229, 231, 235, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+}
+
+.dot.active {
+  background: rgba(56, 189, 248, 0.85);
+  border-color: rgba(56, 189, 248, 0.85);
+}
+
+/* ===== CONTENT: TEXT ===== */
+.letter {
+  max-width: 72ch;
+  margin: 0 auto;
+  text-align: left;
+  color: rgba(229, 231, 235, 0.92);
+}
+
+.letter p {
+  margin: 0 0 14px;
+}
+
+.quote {
+  margin: 18px 0;
+  padding: 12px 14px;
+  border-left: 3px solid rgba(56, 189, 248, 0.75);
+  background: rgba(56, 189, 248, 0.08);
+  border-radius: 12px;
+  font-style: italic;
+  color: rgba(229, 231, 235, 0.95);
+}
+
+.sign {
+  margin-top: 18px;
+  opacity: 0.85;
+}
+
+.counter {
+  font-size: 13px;
+  color: rgba(229, 231, 235, 0.65);
+}
