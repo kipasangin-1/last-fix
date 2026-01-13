@@ -390,6 +390,8 @@ function renderSlide(i) {
     el.controls = true;
     el.playsInline = true;
     el.preload = "metadata";
+    el.setAttribute("playsinline", "");
+    el.setAttribute("webkit-playsinline", "");
   } else {
     el = document.createElement("img");
     el.src = s.src;
