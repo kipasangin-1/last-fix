@@ -131,26 +131,54 @@ function initPuzzle() {
     puzzle.appendChild(piece);
   });
 
+    let selected = null;
+
+  function swapPieces(a, b) {
+    if (!a || !b || a === b) return;
+
+    hasMoved = true;
+
+    const tmpBg = a.style.backgroundPosition;
+    a.style.backgroundPosition = b.style.backgroundPosition;
+    b.style.backgroundPosition = tmpBg;
+
+    const tmpId = a.dataset.tileId;
+    a.dataset.tileId = b.dataset.tileId;
+    b.dataset.tileId = tmpId;
+
+    a.classList.remove("active");
+    b.classList.remove("active");
+    selected = null;
+
+    checkWin();
+  }
+
   document.querySelectorAll(".piece").forEach((p) => {
+    // Desktop drag-drop (tetap jalan di PC)
     p.addEventListener("dragstart", () => (dragged = p));
     p.addEventListener("dragover", (e) => e.preventDefault());
     p.addEventListener("drop", function () {
       if (!dragged || dragged === this) return;
-
-      hasMoved = true;
-
-      const tmpBg = dragged.style.backgroundPosition;
-      dragged.style.backgroundPosition = this.style.backgroundPosition;
-      this.style.backgroundPosition = tmpBg;
-
-      const tmpId = dragged.dataset.tileId;
-      dragged.dataset.tileId = this.dataset.tileId;
-      this.dataset.tileId = tmpId;
-
-      checkWin();
+      swapPieces(dragged, this);
     });
+
+    // Mobile tap-to-swap (ini yang bikin HP bisa main)
+    p.addEventListener("click", () => {
+      if (!selected) {
+        selected = p;
+        p.classList.add("active");
+      } else {
+        swapPieces(selected, p);
+      }
+    });
+
+    // Biar iOS/Android lebih responsif (sentuh)
+    p.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      p.click();
+    }, { passive: false });
   });
-}
+
 
 function checkWin() {
   if (!hasMoved || modalShown) return;
