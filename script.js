@@ -1,9 +1,31 @@
 // script.js
+/* ===== PERSIST (REFRESH RESUME) ===== */
+const STORAGE_KEY = "last_state_v1";
+
+function saveState(patch = {}) {
+  try {
+    const prev = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+    const next = { ...prev, ...patch, t: Date.now() };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+  } catch {}
+}
+
+function loadState() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
 
 /* ===== ELEMENTS ===== */
 const musicPage = document.getElementById("musicPage");
 const puzzlePage = document.getElementById("puzzlePage");
 const contentPage = document.getElementById("contentPage");
+
+const letterPage = document.getElementById("letterPage");
+const toLetterBtn = document.getElementById("toLetterBtn");
+const letterEl = document.getElementById("letter");
 
 const bgm = document.getElementById("bgm");
 const continueBtn = document.getElementById("continueBtn");
@@ -42,18 +64,90 @@ let modalShown = false;
 
 /* ===== RESET (anti nyangkut) ===== */
 (function init() {
-  setBg("music.jpg");
-
+  // amanin modal selalu mati dulu
   winModal.classList.add("hidden");
   winModal.style.display = "none";
 
-  musicPage.classList.remove("hidden");
+  // reset tampilan dasar (nanti dipilih lagi sesuai state)
+  musicPage.classList.add("hidden");
   puzzlePage.classList.add("hidden");
   contentPage.classList.add("hidden");
 
   puzzle.innerHTML = "";
   status.textContent = "";
+
+  // tombol lanjut ke letter: hidden dulu (nanti muncul kalau slide terakhir)
+  if (toLetterBtn) toLetterBtn.classList.add("hidden");
+
+  // ===== RESUME STATE =====
+  const st = loadState();
+  const page = st.page || "music"; // music | puzzle | content | letter
+
+  // set background sesuai page
+  if (page === "music") setBg("music.jpg");
+  if (page === "puzzle") setBg("puzzle.jpg");
+  if (page === "content" || page === "letter") setBg("content.jpg");
+
+  if (page === "music") {
+    musicPage.classList.remove("hidden");
+  } else if (page === "puzzle") {
+    puzzlePage.classList.remove("hidden");
+    initPuzzle();
+  } else if (page === "content") {
+    contentPage.classList.remove("hidden");
+    initCarouselIfNeeded();
+
+    // set slide terakhir yang dibuka
+    if (typeof st.slideIndex === "number") {
+      current = Math.max(0, Math.min(slides.length - 1, st.slideIndex));
+      renderSlide(current);
+    }
+  } else if (page === "letter") {
+    contentPage.classList.remove("hidden");
+    initCarouselIfNeeded();
+
+    // set slide terakhir yang dibuka (tetap simpan)
+    if (typeof st.slideIndex === "number") {
+      current = Math.max(0, Math.min(slides.length - 1, st.slideIndex));
+      renderSlide(current);
+    }
+
+    // mode letter (tanpa hide contentPage karena letterPage ada di dalamnya)
+    const carousel = contentPage.querySelector(".carousel");
+    const meta = contentPage.querySelector(".meta");
+    const divider = contentPage.querySelector(".divider");
+    if (carousel) carousel.classList.add("hidden");
+    if (meta) meta.classList.add("hidden");
+    if (divider) divider.classList.add("hidden");
+    if (toLetterBtn) toLetterBtn.classList.add("hidden");
+
+    letterPage.classList.remove("hidden");
+  } else {
+    // fallback
+    musicPage.classList.remove("hidden");
+    setBg("music.jpg");
+  }
 })();
+
+// tombol lanjut ke letter: sembunyi dulu (baru muncul di slide terakhir)
+if (toLetterBtn) {
+  toLetterBtn.addEventListener("click", () => {
+    // ✅ SIMPAN BIAR KALO REFRESH TETEP DI LETTER
+    saveState({ page: "letter", slideIndex: current });
+
+    const carousel = contentPage.querySelector(".carousel");
+    const meta = contentPage.querySelector(".meta");
+    const divider = contentPage.querySelector(".divider");
+
+    if (carousel) carousel.classList.add("hidden");
+    if (meta) meta.classList.add("hidden");
+    if (divider) divider.classList.add("hidden");
+    toLetterBtn.classList.add("hidden");
+
+    letterPage.classList.remove("hidden");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+}
 
 /* ===== MUSIC PICK ===== */
 document.querySelectorAll(".music-btn").forEach((btn) => {
@@ -201,8 +295,8 @@ function checkWin() {
 }
 
 function showModal() {
-  winModal.style.display = "grid";
   winModal.classList.remove("hidden");
+  winModal.style.display = "grid";
   document.querySelectorAll(".piece").forEach((p) => (p.draggable = false));
 }
 
@@ -231,6 +325,30 @@ nextBtn.addEventListener("click", () => {
   setBg("content.jpg");
   initCarouselIfNeeded();
 });
+
+if (toLetterBtn) {
+  toLetterBtn.addEventListener("click", () => {
+    // jangan hide contentPage, karena letterPage ada di dalamnya
+
+    // sembunyiin bagian konten (carousel + meta + divider + tombol)
+    const carousel = contentPage.querySelector(".carousel");
+    const meta = contentPage.querySelector(".meta");
+    const divider = contentPage.querySelector(".divider");
+
+    if (carousel) carousel.classList.add("hidden");
+    if (meta) meta.classList.add("hidden");
+    if (divider) divider.classList.add("hidden");
+    toLetterBtn.classList.add("hidden");
+
+    // tampilkan letter
+    letterPage.classList.remove("hidden");
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    // kalau mau background beda, aktifin ini:
+    // setBg("letter.jpg");
+  });
+}
 
 /* ===== CAROUSEL ELEMENTS ===== */
 const stage = document.getElementById("stage");
@@ -366,6 +484,14 @@ const slides = [
 
 let current = 0;
 
+/* ===== TOMBOL LANJUT CUMA SLIDE TERAKHIR ===== */
+function updateNextButtonVisibility() {
+  if (!toLetterBtn) return;
+  const isLast = current === slides.length - 1;
+  if (isLast) toLetterBtn.classList.remove("hidden");
+  else toLetterBtn.classList.add("hidden");
+}
+
 function stopAnyVideo() {
   if (!stage) return;
   const v = stage.querySelector("video");
@@ -404,15 +530,31 @@ function renderSlide(i) {
 
   if (captionEl) captionEl.textContent = s.caption || "";
   if (counterEl) counterEl.textContent = `${i + 1} / ${slides.length}`;
+
+  updateNextButtonVisibility();
 }
 
 function nextSlide() {
-  current = (current + 1) % slides.length;
+  // ✅ kalau udah slide terakhir, jangan lanjut lagi
+  if (current >= slides.length - 1) {
+    current = slides.length - 1;
+    renderSlide(current);
+    return;
+  }
+
+  current++;
   renderSlide(current);
 }
 
 function prevSlide() {
-  current = (current - 1 + slides.length) % slides.length;
+  // ✅ kalau udah slide pertama, jangan mundur lagi
+  if (current <= 0) {
+    current = 0;
+    renderSlide(current);
+    return;
+  }
+
+  current--;
   renderSlide(current);
 }
 
@@ -430,7 +572,40 @@ function initCarouselIfNeeded() {
     if (e.key === "ArrowRight") nextSlide();
   });
 
+  // awalnya hidden, nanti muncul kalau udah sampai slide terakhir
+  if (toLetterBtn) toLetterBtn.classList.add("hidden");
+
   renderSlide(current);
 }
 
 console.log("Total slides:", slides.length);
+
+const letterHTML = `
+  <p>hai sel
+i just wanna say thank u and sorry for everything
+
+pas awal” kelas 10 aku ga pernah kepikiran kalau kita bakal jadi temen deket, ku kira aku bakal deket sama org repanda aja sampe tamat, dan kau jg bakal sama circlemu itu sampe tamat, trs tiba” aja pas kelas 11 ngalir gitu aja, aku lupa awal kita mulai deket karena apa, aku ingetnya yg kita pergi naik bus tayo itu sama dl ko pernah dah sesak kali mau kamar mandi trs minta temenin aku, tapi ko ga nutup pintu bangke, trs aku disitu kek “ni betolan rupanya aslinya anak ni semalu”in ini?”
+
+habis tu aku ga inget tiba” udah deket aja kita. padahal dulu kita semua seseru itu ya sel? sering nonton bareng, tiap pulang sekolah kalau bisa selalu pergi dulu, pantang pulang sblm jalan” dulu, sering mabar dll
+
+kenapa sekarang malah jadi gini ya sel, kyknya dulu kita semua sefomo itu sampe ga mau ketinggalan 1x pergi pun, pokoknya selagi bisa ikut main harus ikut terus, sekarang walaupun beberapa masih ttp main tapi vibesnya udah ga seseru dulu lagi
+
+trs yg iyanya kalau ditarik akar masalahnya lucu kali sel, masa semuanya berantem cuman karena cowok doang sel? ntah itu dari pita putri, trs abil pita, kenapa cuman karena cowok ya? tapi skrg udah ga bisa ngapa”in lagi cuman bisa nanya” doang, “gimana jadinya kalau semua lgsg diselesain pas itu juga, mungkin kita semua masih bisa ngusahain buat kumpul tiap ada waktu”, bukan yg ada waktunya tapi udah ga pengen ngumpul lagi karena masa sma yg tadinya seseru itu buat dikenang malah jadi seburuk itu buat dikenang
+
+kau ga ada kangen sedikitpun kah sel? karena jujur aja aku kangen semuanya sel, bahkan dulu aku juga pernah kangen sama org safira karena kami juga pernah deket dulu, kyk kalau aja semuanya lgsg dibahas tanpa diem”an pasti ga bakal kek gini, kalau aja dulu ga mentingin ego doang pasti masih aman” aja at least sampe tamat
+
+sel aku ga ada niatan mau ngerusak liburan terakhir kita bisa balik ke medan, aku niatnya cuman mau ngelurusin semua aja sel, bahkan aku juga ngechat kawanku buat nanya alasan yg ternyata jawaban dia juga ga pernah ada dalam list kemungkinan” yg bakal dia sebutin
+
+cuman aku mikir sel, karena kalian bahas etika pertemanan, si abil tu ga ada masalah sama sekali sama zhua kan, tapi dia izin samaku sel pas diajak zhua pergi, padahal aku ga pernah minta itu bahkan aku fine” aja mau org ni temenan deket atau sering pergi juga aku ga masalah, tapi setelah ku jelasin dia ttp ga mau karena katanya dia ga terima kalau aku dijahatin sama kawanku itu, dan dia ga bisa nganggep kalau “ah dia ngelakuin itu ke si saka kok bukan ke aku”.
+trs aku mikir, aku yg cuman ngejelasin ke kalian aja udah sakit hati karena balesannya, apalagi dia yg selama ini ngerasain ya sel? trs selama ini, setahun dia mendam itu semua sendirian karena ga mau ngerusak hubungan kita, aku masih tetap temenan sama kalian tanpa tau sama sekali apa yg udah kejadian, sedangkan dia jaga jarak sama kawanku itu karena aku, kan kek lucu kali gitu sel
+
+padahal niatnya aku ga ada sampe kyk dia loh sel, aku ga ada niatan buat ngelakuin hal yang sama, buat jaga jarak sama kalian, ga ada sama sekali aku kepikiran kyk gitu sel, aku cuman mau ngelurusin aja, tapi setelah ku jelasin, aku paham kenapa abil sampe blg ga mau berurusan lagi
+
+aku ga tau kedepannya bakal gimana, aku cmn bisa pastiin 1 hal, kalau kau ada butuh apa” bilang ya, kalau kau ada mau cerita apapun itu juga bilang aja ya, aku masih disini kalau kau lagi butuh 2 itu
+
+aku tau selama kita temenan aku banyak salahnya, maaf ya sel, aku minta maaf atas semua kesalahan yg ku buat ntah itu sengaja ataupun ga sengaja, aku juga minta maaf kalau ketikanku ada yg salah, ntah itu yg kemaren ataupun yg skrg ini juga
+
+makasii banyak yaa sel, makasi karena udah nemenin aku pas aku lagi berantem sama kawanku, makasii banyak karena udah mau jadi temenku sel, makasii buat semua hal yg udah kau lakuin buat aku sel</p>
+`;
+
+if (letterEl) letterEl.innerHTML = letterHTML;
