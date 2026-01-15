@@ -579,3 +579,14 @@ if (letterEl) {
   letterEl.addEventListener("cut", (e) => e.preventDefault());
   letterEl.addEventListener("contextmenu", (e) => e.preventDefault()); // klik kanan / hold
 }
+
+document.addEventListener("visibilitychange", async () => {
+  if (document.hidden) {
+    if (bgm && !bgm.paused) bgm.pause();
+  } else {
+    // balik ke safari → coba play lagi (kadang iPhone blok autoplay)
+    try {
+      if (bgm && bgm.src) await bgm.play();
+    } catch (e) {}
+  }
+});

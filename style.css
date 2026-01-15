@@ -391,6 +391,14 @@ h1 {
   .stage video {
     max-height: 60vh;
   }
+
+  /* ✅ KHUSUS CONTENT PAGE AJA: posisinya ke tengah layar */
+  #contentPage.wrap {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* tengah vertikal */
+  }
 }
 
 html,
