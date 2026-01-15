@@ -1,9 +1,14 @@
 :root {
-  --text: #e5e7eb;
-  --muted: rgba(229, 231, 235, 0.75);
-  --line: rgba(255, 255, 255, 0.12);
-  --card: rgba(255, 255, 255, 0.07);
-  --accent: #38bdf8;
+  --text: #f7f2ea; /* putih hangat */
+  --muted: rgba(247, 242, 234, 0.75);
+  --line: rgba(255, 255, 255, 0.14);
+
+  /* card soft coklat transparan */
+  --card: rgba(255, 255, 255, 0.08);
+
+  /* accent coklat susu / caramel */
+  --accent: #d6a77a;
+
   --transition: 0.3s ease;
 }
 
@@ -16,19 +21,24 @@ body {
   font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
   color: var(--text);
   line-height: 1.7;
-  background-color: #0f172a;
+
+  /* ✅ ganti biru -> soft coklat */
+  background-color: #a97b5a;
+
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   transition: background-image var(--transition);
 }
 
-/* Overlay gelap untuk readability */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.78);
+
+  /* ✅ overlay coklat lembut */
+  background: rgba(74, 45, 30, 0.55);
+
   pointer-events: none;
   z-index: -1;
 }
@@ -102,7 +112,7 @@ h1 {
   border-radius: 12px;
   cursor: pointer;
   background: var(--accent);
-  color: #06101b;
+  color: #2b1a12; /* coklat tua */
   font-weight: 800;
   transition: background var(--transition), transform 0.1s ease;
 }
@@ -113,8 +123,8 @@ h1 {
 
 .btn.ghost {
   background: rgba(255, 255, 255, 0.1);
-  color: rgba(229, 231, 235, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: rgba(247, 242, 234, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .btn:disabled {
@@ -332,11 +342,12 @@ h1 {
   max-width: 72ch;
   margin: 0 auto;
   text-align: left;
-  color: rgba(229, 231, 235, 0.92);
+  color: #fff;
 }
 
 .letter p {
   margin: 0 0 14px;
+  color: #fff;
 }
 
 .quote {
@@ -381,4 +392,19 @@ h1 {
 html,
 body {
   -webkit-overflow-scrolling: touch;
+}
+
+/* ✅ LETTER: 1 lapis aja (card putih), teks hitam */
+#letterPage.card {
+  background: #ffffff !important; /* putih solid */
+  border: none !important; /* hilangin border transparan */
+  backdrop-filter: none !important; /* hilangin blur */
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important; /* hilangin shadow biar clean */
+}
+
+/* ✅ teks letter jadi hitam solid */
+#letterPage .letter,
+#letterPage .letter p {
+  color: #111111 !important;
 }
