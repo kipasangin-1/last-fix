@@ -434,6 +434,24 @@ body {
   -webkit-touch-callout: none; /* iPhone: hilangin menu copy */
 }
 
+/* ✅ FIX iPhone: background/card konten biar bener2 center */
+@media (max-width: 768px) {
+  .carousel,
+  .meta,
+  .stage {
+    width: 100% !important; /* jangan vw */
+    max-width: 720px !important; /* atau sesuai yg kamu mau */
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* extra: pastiin gak ada yg “narik” ke kanan */
+  html,
+  body {
+    overflow-x: hidden;
+  }
+}
+
 @media (max-width: 768px) {
   #contentPage.card {
     width: 100% !important; /* jangan 92vw */
