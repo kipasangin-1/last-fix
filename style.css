@@ -433,3 +433,12 @@ body {
   user-select: none;
   -webkit-touch-callout: none; /* iPhone: hilangin menu copy */
 }
+
+@media (max-width: 768px) {
+  #contentPage.card {
+    width: 100% !important; /* jangan 92vw */
+    max-width: 720px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
