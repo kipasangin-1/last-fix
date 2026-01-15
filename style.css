@@ -415,3 +415,13 @@ body {
 #letterPage .letter p {
   color: #111111 !important;
 }
+
+@media (max-width: 768px) {
+  .wrap {
+    min-height: 100vh;
+    padding: 20px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* tengah vertikal */
+  }
+}
