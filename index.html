@@ -52,14 +52,20 @@
       <div class="card center page hidden" id="puzzlePage">
         <p class="sub">susun dulu ini.</p>
 
-        <div
-          class="puzzle"
-          id="puzzle"
-          role="application"
-          aria-label="Puzzle 4x4, gunakan klik atau drag untuk menyusun"
-        ></div>
-
+        <div class="puzzle" id="puzzle"></div>
         <p class="status" id="status" aria-live="polite"></p>
+      </div>
+
+      <!-- ✅ TARUH DI LUAR puzzlePage -->
+      <div class="card center page hidden" id="afterPuzzlePage">
+        <h1>baca dl ini bentar</h1>
+
+        <div class="divider"></div>
+        <div class="letter" id="afterPuzzleText"></div>
+
+        <div style="margin-top: 18px">
+          <button id="toContentBtn" class="btn">y ok</button>
+        </div>
       </div>
 
       <div class="card page hidden" id="contentPage">

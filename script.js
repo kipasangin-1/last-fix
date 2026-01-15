@@ -2,6 +2,10 @@ const musicPage = document.getElementById("musicPage");
 const puzzlePage = document.getElementById("puzzlePage");
 const contentPage = document.getElementById("contentPage");
 
+const afterPuzzlePage = document.getElementById("afterPuzzlePage");
+const toContentBtn = document.getElementById("toContentBtn");
+const afterPuzzleText = document.getElementById("afterPuzzleText");
+
 const letterPage = document.getElementById("letterPage");
 const toLetterBtn = document.getElementById("toLetterBtn");
 const letterEl = document.getElementById("letter");
@@ -69,6 +73,7 @@ function resumeBgm() {
 
   if (puzzle) puzzle.innerHTML = "";
   if (status) status.textContent = "";
+  if (afterPuzzlePage) afterPuzzlePage.classList.add("hidden");
 
   if (toLetterBtn) toLetterBtn.classList.add("hidden");
 })();
@@ -240,17 +245,15 @@ if (stayBtn) {
 
 if (nextBtn) {
   nextBtn.addEventListener("click", () => {
-    if (winModal) {
-      winModal.classList.add("hidden");
-      winModal.style.display = "none";
-    }
+    winModal.classList.add("hidden");
+    winModal.style.display = "none";
 
-    if (puzzlePage) puzzlePage.classList.add("hidden");
-    if (contentPage) contentPage.classList.remove("hidden");
+    // ✅ ke halaman baru dulu (bukan langsung carousel)
+    puzzlePage.classList.add("hidden");
+    if (afterPuzzlePage) afterPuzzlePage.classList.remove("hidden");
+
     window.scrollTo({ top: 0, behavior: "smooth" });
-
-    setBg("content.jpg");
-    initCarouselIfNeeded();
+    setBg("content.jpg"); // boleh tetap content.jpg atau bikin bg baru mis: after.jpg
   });
 }
 
@@ -292,7 +295,8 @@ const captions = {
   p35: "eh ini last kita main berdua ga si",
   p36: "habede sel",
   p37: "imut kln",
-  p38: "",
+  p38: "acc sel😏",
+  p39: "",
 
   v01: "WKWKWKWKWKWKKW INI KEKNYA NANGIS KRN DITINGGAL GA SI KO",
   v02: "sor kali goyang kln",
@@ -371,7 +375,7 @@ const slides = [
   ...photoRange(30, 31),
   video(13),
 
-  ...photoRange(32, 38),
+  ...photoRange(32, 39),
 ];
 
 let current = 0;
@@ -563,3 +567,22 @@ document.addEventListener("visibilitychange", async () => {
     } catch (e) {}
   }
 });
+
+const afterPuzzleHTML = `
+  <p>eh sblmnya ni disclaimer dl yh</p>
+  <p>sebelum ku kirim samamu udah ku coba pake laptop sama hpku, kalau dia ngelag berarti salah hpmu</p>
+  <p>trs kalau kau buka ini pake hp, pas video dia harus ko play dl baru mw mulai y</p>
+`;
+
+if (afterPuzzleText) afterPuzzleText.innerHTML = afterPuzzleHTML;
+
+if (toContentBtn) {
+  toContentBtn.addEventListener("click", () => {
+    if (afterPuzzlePage) afterPuzzlePage.classList.add("hidden");
+    contentPage.classList.remove("hidden");
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    setBg("content.jpg");
+    initCarouselIfNeeded();
+  });
+}
