@@ -342,12 +342,11 @@ h1 {
   max-width: 72ch;
   margin: 0 auto;
   text-align: left;
-  color: #fff;
+  color: rgba(229, 231, 235, 0.92);
 }
 
 .letter p {
   margin: 0 0 14px;
-  color: #fff;
 }
 
 .quote {
@@ -394,16 +393,24 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* ✅ LETTER: 1 lapis aja (card putih), teks hitam */
-#letterPage.card {
-  background: #ffffff !important; /* putih solid */
-  border: none !important; /* hilangin border transparan */
-  backdrop-filter: none !important; /* hilangin blur */
-  -webkit-backdrop-filter: none !important;
-  box-shadow: none !important; /* hilangin shadow biar clean */
+/* =========================
+   CUSTOM (yang kamu mau)
+   ========================= */
+
+/* ✅ PUZZLE: turunin dikit */
+#puzzlePage {
+  margin-top: 40px;
 }
 
-/* ✅ teks letter jadi hitam solid */
+/* ✅ LETTER: 1 lapis putih solid, teks hitam */
+#letterPage.card {
+  background: #ffffff !important;
+  border: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+}
+
 #letterPage .letter,
 #letterPage .letter p {
   color: #111111 !important;

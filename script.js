@@ -539,30 +539,34 @@ if (toLetterBtn) {
 
 /* ===== LETTER CONTENT ===== */
 const letterHTML = `
-  <p>hai sel<br>
-  i just wanna say thank u and sorry for everything</p>
+  <p>hai sel</p>
 
-  <p>pas awal” kelas 10 aku ga pernah kepikiran kalau kita bakal jadi temen deket, ku kira aku bakal deket sama org repanda aja sampe tamat, dan kau jg bakal sama circlemu itu sampe tamat, trs tiba” aja pas kelas 11 ngalir gitu aja, aku lupa awal kita mulai deket karena apa, aku ingetnya yg kita pergi naik bus tayo itu sama dl ko pernah dah sesak kali mau kamar mandi trs minta temenin aku, tapi ko ga nutup pintu bangke, trs aku disitu kek “ni betolan rupanya aslinya anak ni semalu”in ini?”<br><br>
-  habis tu aku ga inget tiba” udah deket aja kita. padahal dulu kita semua seseru itu ya sel? sering nonton bareng, tiap pulang sekolah kalau bisa selalu pergi dulu, pantang pulang sblm jalan” dulu, sering mabar dll<br><br>
-  kenapa sekarang malah jadi gini ya sel, kyknya dulu kita semua sefomo itu sampe ga mau ketinggalan 1x pergi pun, pokoknya selagi bisa ikut main harus ikut terus, sekarang walaupun beberapa masih ttp main tapi vibesnya udah ga seseru dulu lagi</p>
+  <p>pas awal” kelas 10 aku ga pernah kepikiran kalau kita bakal jadi temen deket, ku kira aku bakal deket sama org repanda aja sampe tamat, dan kau jg bakal sama circlemu sampe tamat, trs tiba” pas kelas 11 udah ngalir gitu aja, aku lupa awal kita mulai deket karena apa, aku ingetnya yg kita pergi naik bus tayo itu sama dl ko pernah dah sesak kali mau kamar mandi trs minta temenin aku, tapi ko ga nutup pintu bangke, trs aku disitu kek “ni betolan rupanya aslinya anak ni semalu”in ini?”, habis tu aku ga inget tiba” udah deket aja kita.</p>
 
-  <p>trs yg iyanya kalau ditarik akar masalahnya lucu kali sel, masa semuanya berantem cuman karena cowok doang sel? ntah itu dari pita putri, trs abil pita, kenapa cuman karena cowok ya? tapi skrg udah ga bisa ngapa”in lagi cuman bisa nanya” doang, “gimana jadinya kalau semua lgsg diselesain pas itu juga, mungkin kita semua masih bisa ngusahain buat kumpul tiap ada waktu”, bukan yg ada waktunya tapi udah ga pengen ngumpul lagi karena masa sma yg tadinya seseru itu buat dikenang malah jadi seburuk itu buat dikenang</p>
+  <p>padahal dulu kita semua seseru itu ya sel? sering nonton bareng, tiap pulang sekolah kalau bisa selalu pergi dulu, pantang pulang sblm kena telpon, sering mabar, tawaf keliling sekolah, dll</p>
 
-  <p>kau ga ada kangen sedikitpun kah sel? karena jujur aja aku kangen semuanya sel, bahkan dulu aku juga pernah kangen sama org safira karena kami juga pernah deket dulu, kyk kalau aja semuanya lgsg dibahas tanpa diem”an pasti ga bakal kek gini, kalau aja dulu ga mentingin ego doang pasti masih aman” aja at least sampe tamat</p>
+  <p>kenapa sekarang malah jadi gini ya sel, kyknya dulu kita semua sefomo itu sampe ga mau ketinggalan 1x pergi pun, pokoknya selagi bisa ikut main harus ikut terus, sekarang walaupun beberapa masih ttp main tapi vibesnya udah agak beda</p>
 
-  <p>sel aku ga ada niatan mau ngerusak liburan terakhir kita bisa balik ke medan, aku niatnya cuman mau ngelurusin semua aja sel, bahkan aku juga ngechat kawanku buat nanya alasan yg ternyata jawaban dia juga ga pernah ada dalam list kemungkinan” yg bakal dia sebutin</p>
+  <p>trs yg iyanya kalau ditarik akar masalahnya lucu kali sel, masa semuanya berantem cuman karena cowok doang sel?kenapa cuman karena cowok ya? tapi skrg udah ga bisa ngapa”in lagi cuman bisa nanya” doang, “gimana jadinya kalau semua lgsg diselesain pas itu juga” mungkin kita semua masih bisa ngusahain buat kumpul tiap ada waktu, bukan yg ada waktunya tapi udah ga pengen ngumpul lagi karena masa sma yg tadinya seseru itu buat dikenang malah jadi seburuk itu buat dikenang</p>
 
-  <p>cuman aku mikir sel, karena kalian bahas etika pertemanan, si abil tu ga ada masalah sama sekali sama zhua kan, tapi dia izin samaku sel pas diajak zhua pergi, padahal aku ga pernah minta itu bahkan aku fine” aja mau org ni temenan deket atau sering pergi juga aku ga masalah, tapi setelah ku jelasin dia ttp ga mau karena katanya dia ga terima kalau aku dijahatin sama kawanku itu, dan dia ga bisa nganggep kalau “ah dia ngelakuin itu ke si saka kok bukan ke aku”.</p>
+  <p>kau ga ada kangen sedikitpun kah sel? karena jujur aja aku kangen semuanya sel, kangen awal” masuk pas dulu masih pake masker, 17an, jamkos, kelas 11 pas lagi seru serunya, dumai, kelas 12 yg udah mulai sibuk ngejar ptn, yg makin sering pergi karena “we tahun depan kita udah ga bisa kek gini lagi”, bahkan dulu aku pernah kgn sama org safira karena dulu pernah deket, kyk kalau aja semuanya lgsg dibahas tanpa diem”an pasti ga bakal kek gini, kalau aja dulu ga mentingin ego doang pasti masih aman” aja at least sampe tamat</p>
 
-  <p>trs aku mikir, aku yg cuman ngejelasin ke kalian aja udah sakit hati karena balesannya, apalagi dia yg selama ini ngerasain ya sel? trs selama ini, setahun dia mendam itu semua sendirian karena ga mau ngerusak hubungan kita, aku masih tetap temenan sama kalian tanpa tau sama sekali apa yg udah kejadian, sedangkan dia jaga jarak sama kawanku itu karena aku, kan kek lucu kali gitu sel</p>
+  <p>sel aku ga ada niatan mau ngerusak liburan terakhir kita bisa balik ke medan, aku niatnya cuman mau ngelurusin aja sel, bahkan aku juga ngechat kawanku buat nanya alasan yg ternyata jawaban dia juga ga pernah ada dalam list kemungkinan” yg bakal dia sebutin</p>
 
-  <p>padahal niatnya aku ga ada sampe kyk dia loh sel, aku ga ada niatan buat ngelakuin hal yang sama, buat jaga jarak sama kalian, ga ada sama sekali aku kepikiran kyk gitu sel, aku cuman mau ngelurusin aja, tapi setelah ku jelasin, aku paham kenapa abil sampe blg ga mau berurusan lagi</p>
+  <p>cuman aku mikir sel, karena kalian bahas etika pertemanan, si abil tu ga ada masalah sama sekali sama zhua kan, tapi dia izin samaku sel pas diajak zhua pergi, padahal aku ga pernah minta itu bahkan aku fine” aja mau org ni temenan deket atau sering pergi juga aku ga masalah, tapi setelah ku jelasin dia ttp ga mau karena katanya dia ga terima kalau aku dijahatin sama kawanku itu, dan dia ga bisa nganggep kalau “ah dia ngelakuin itu ke si saka kok bukan ke aku”.<br>
+  trs aku mikir, aku yg cuman ngejelasin ke kalian aja udah sakit hati karena balesannya, apalagi dia yg selama ini ngerasain ya sel? trs selama ini, setahun dia mendam itu semua sendirian karena ga mau ngerusak hubungan kita, aku masih tetap temenan sama kalian tanpa tau sama sekali apa yg udah kejadian, sedangkan dia jaga jarak sama kawanku itu karena aku, kan kek lucu kali gitu sel</p>
 
-  <p>aku ga tau kedepannya bakal gimana, aku cmn bisa pastiin 1 hal, kalau kau ada butuh apa” bilang ya, kalau kau ada mau cerita apapun itu juga bilang aja ya, aku masih disini kalau kau lagi butuh 2 itu</p>
+  <p>padahal niatnya aku ga ada sampe kyk gitu loh sel, aku ga ada niatan buat ngelakuin hal yang sama, buat jaga jarak sama kalian, ga ada sama sekali aku kepikiran kyk gitu sel, aku cuman mau ngelurusin aja, tapi setelah ku jelasin, aku paham kenapa abil sampe blg ga mau berurusan lagi</p>
+
+  <p>aku ga tau kedepannya bakal gimana, aku cmn bisa bilang, kalau kau ada butuh apa” bilang ya, kalau kau ada mau cerita apapun itu juga bilang aja ya, aku masih disini kalau kau lagi butuh 2 itu</p>
 
   <p>aku tau selama kita temenan aku banyak salahnya, maaf ya sel, aku minta maaf atas semua kesalahan yg ku buat ntah itu sengaja ataupun ga sengaja, aku juga minta maaf kalau ketikanku ada yg salah, ntah itu yg kemaren ataupun yg skrg ini juga</p>
 
   <p>makasii banyak yaa sel, makasi karena udah nemenin aku pas aku lagi berantem sama kawanku, makasii banyak karena udah mau jadi temenku sel, makasii buat semua hal yg udah kau lakuin buat aku sel</p>
+
+  <p>i just wanna say thank u and sorry for everything, see u next time sel👋🏻</p>
+
+  <p>aku sengaja buat disini karena webnya bisa lgsg ku hapus pas dah ko baca😁</p>
 `;
 
 if (letterEl) letterEl.innerHTML = letterHTML;
