@@ -425,3 +425,33 @@ body {
     justify-content: center; /* tengah vertikal */
   }
 }
+/* ✅ biar ga ada geser ke kanan */
+html,
+body {
+  overflow-x: hidden;
+}
+
+/* ✅ wrap jangan bikin aneh2 di HP */
+@media (max-width: 768px) {
+  .wrap {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .card {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel,
+  .meta {
+    width: 100% !important;
+  }
+
+  .stage {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
