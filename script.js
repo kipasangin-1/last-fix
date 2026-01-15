@@ -572,3 +572,10 @@ const letterHTML = `
 if (letterEl) letterEl.innerHTML = letterHTML;
 
 console.log("Total slides:", slides.length);
+
+// ✅ blok copy di bagian letter
+if (letterEl) {
+  letterEl.addEventListener("copy", (e) => e.preventDefault());
+  letterEl.addEventListener("cut", (e) => e.preventDefault());
+  letterEl.addEventListener("contextmenu", (e) => e.preventDefault()); // klik kanan / hold
+}
