@@ -1,6 +1,3 @@
-// script.js
-
-/* ===== ELEMENTS ===== */
 const musicPage = document.getElementById("musicPage");
 const puzzlePage = document.getElementById("puzzlePage");
 const contentPage = document.getElementById("contentPage");
@@ -19,24 +16,20 @@ const winModal = document.getElementById("winModal");
 const stayBtn = document.getElementById("stayBtn");
 const nextBtn = document.getElementById("nextBtn");
 
-/* ===== BACKGROUND CONTROL ===== */
 function setBg(name) {
   document.body.style.backgroundImage = `url("assets/bg/${name}")`;
 }
 
-/* ===== MUSIC ===== */
 const tracks = {
   song1: "assets/audio/song1.mp3",
   song2: "assets/audio/song2.mp3",
   song3: "assets/audio/song3.mp3",
 };
 
-/* ===== PUZZLE CONFIG ===== */
 const size = 4;
 const pieceSize = 80;
 const total = size * size;
 
-// detect mobile/iOS
 const isTouch =
   window.matchMedia("(pointer: coarse)").matches || "ontouchstart" in window;
 
@@ -44,27 +37,24 @@ let dragged = null;
 let hasMoved = false;
 let modalShown = false;
 
-/* ===== CAROUSEL ELEMENTS ===== */
 const stage = document.getElementById("stage");
 const captionEl = document.getElementById("caption");
 const counterEl = document.getElementById("counter");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn2 = document.getElementById("nextBtn2");
 
-/* ===== (OPTIONAL) BGM DUCKING HELPERS ===== */
 function duckBgm(isDucking) {
   if (!bgm) return;
   bgm.volume = isDucking ? 0.1 : 0.35;
 }
 function resumeBgm() {
   if (!bgm) return;
-  // kalau user pause manual, play bisa gagal; jadi try/catch
+
   try {
     if (bgm.paused) bgm.play();
   } catch {}
 }
 
-/* ===== RESET (start from MUSIC) ===== */
 (function init() {
   setBg("music.jpg");
 
@@ -80,11 +70,9 @@ function resumeBgm() {
   if (puzzle) puzzle.innerHTML = "";
   if (status) status.textContent = "";
 
-  // tombol lanjut ke letter: sembunyi dulu (baru muncul di slide terakhir)
   if (toLetterBtn) toLetterBtn.classList.add("hidden");
 })();
 
-/* ===== MUSIC PICK ===== */
 document.querySelectorAll(".music-btn").forEach((btn) => {
   btn.addEventListener("click", async () => {
     const key = btn.dataset.track;
@@ -107,7 +95,6 @@ document.querySelectorAll(".music-btn").forEach((btn) => {
   });
 });
 
-/* ===== NAV: MUSIC -> PUZZLE ===== */
 if (continueBtn) {
   continueBtn.addEventListener("click", () => {
     if (musicPage) musicPage.classList.add("hidden");
@@ -119,7 +106,6 @@ if (continueBtn) {
   });
 }
 
-/* ===== PUZZLE LOGIC ===== */
 function makeTiles() {
   const tiles = [];
   for (let i = 0; i < total; i++) {
@@ -163,13 +149,12 @@ function initPuzzle() {
   shuffled.forEach((tile) => {
     const piece = document.createElement("div");
     piece.className = "piece";
-    piece.draggable = !isTouch; // iPhone: false
+    piece.draggable = !isTouch;
     piece.style.backgroundPosition = tile.pos;
     piece.dataset.tileId = String(tile.id);
     puzzle.appendChild(piece);
   });
 
-  // tap-to-swap
   let selected = null;
 
   function swapPieces(a, b) {
@@ -201,7 +186,6 @@ function initPuzzle() {
       swapPieces(dragged, this);
     });
 
-    // Mobile/iOS
     p.addEventListener("pointerdown", (e) => {
       if (isTouch) e.preventDefault();
 
@@ -239,7 +223,6 @@ function showModal() {
   document.querySelectorAll(".piece").forEach((p) => (p.draggable = false));
 }
 
-/* ===== MODAL BUTTONS ===== */
 let teased = false;
 
 if (stayBtn) {
@@ -271,7 +254,6 @@ if (nextBtn) {
   });
 }
 
-/* ===== CAPTIONS ===== */
 const captions = {
   p01: "WKWKWKWKKWWK ANAK SIAPA INI KEK ANAK ILANG",
   p02: "ni keknya first time kita nobar, sblm ada huru hara si kuning",
@@ -327,7 +309,6 @@ const captions = {
   v13: "aku lupa ini ngetawain apa",
 };
 
-/* ===== SLIDES BUILDER ===== */
 function pad2(n) {
   return String(n).padStart(2, "0");
 }
@@ -362,7 +343,6 @@ function videoRange(a, b) {
   return arr;
 }
 
-/* ===== FINAL ORDER ===== */
 const slides = [
   ...photoRange(1, 4),
   video(1),
@@ -396,7 +376,6 @@ const slides = [
 
 let current = 0;
 
-/* ===== UI HELPERS ===== */
 function updateNextButtonVisibility() {
   if (!toLetterBtn) return;
   const isLast = current === slides.length - 1;
@@ -409,7 +388,6 @@ function updateArrowButtons() {
   if (nextBtn2) nextBtn2.disabled = current === slides.length - 1;
 }
 
-/* ===== CAROUSEL RENDER ===== */
 function stopAnyVideo() {
   if (!stage) return;
   const v = stage.querySelector("video");
@@ -469,7 +447,6 @@ function renderSlide(i) {
   updateArrowButtons();
 }
 
-/* STOP DI AKHIR (NO LOOP) */
 function nextSlide() {
   if (current >= slides.length - 1) {
     current = slides.length - 1;
@@ -509,7 +486,6 @@ function initCarouselIfNeeded() {
   renderSlide(current);
 }
 
-/* ===== CONTINUE TO LETTER ===== */
 if (toLetterBtn) {
   toLetterBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -537,7 +513,6 @@ if (toLetterBtn) {
   });
 }
 
-/* ===== LETTER CONTENT ===== */
 const letterHTML = `
   <p>hai sel</p>
 
@@ -547,7 +522,7 @@ const letterHTML = `
 
   <p>kenapa sekarang malah jadi gini ya sel, kyknya dulu kita semua sefomo itu sampe ga mau ketinggalan 1x pergi pun, pokoknya selagi bisa ikut main harus ikut terus, sekarang walaupun beberapa masih ttp main tapi vibesnya udah agak beda</p>
 
-  <p>trs yg iyanya kalau ditarik akar masalahnya lucu kali sel, masa semuanya berantem cuman karena cowok doang sel?kenapa cuman karena cowok ya? tapi skrg udah ga bisa ngapa”in lagi cuman bisa nanya” doang, “gimana jadinya kalau semua lgsg diselesain pas itu juga” mungkin kita semua masih bisa ngusahain buat kumpul tiap ada waktu, bukan yg ada waktunya tapi udah ga pengen ngumpul lagi karena masa sma yg tadinya seseru itu buat dikenang malah jadi seburuk itu buat dikenang</p>
+  <p>trs yg iyanya kalau ditarik akar masalahnya lucu kali sel, masa semuanya berantem cuman karena cowok doang sel? kenapa cuman karena cowok ya? tapi skrg udah ga bisa ngapa”in lagi cuman bisa nanya” doang, “gimana jadinya kalau semua lgsg diselesain pas itu juga” mungkin kita semua masih bisa ngusahain buat kumpul tiap ada waktu, bukan yg ada waktunya tapi udah ga pengen ngumpul lagi karena masa sma yg tadinya seseru itu buat dikenang malah jadi seburuk itu buat dikenang</p>
 
   <p>kau ga ada kangen sedikitpun kah sel? karena jujur aja aku kangen semuanya sel, kangen awal” masuk pas dulu masih pake masker, 17an, jamkos, kelas 11 pas lagi seru serunya, dumai, kelas 12 yg udah mulai sibuk ngejar ptn, yg makin sering pergi karena “we tahun depan kita udah ga bisa kek gini lagi”, bahkan dulu aku pernah kgn sama org safira karena dulu pernah deket, kyk kalau aja semuanya lgsg dibahas tanpa diem”an pasti ga bakal kek gini, kalau aja dulu ga mentingin ego doang pasti masih aman” aja at least sampe tamat</p>
 
@@ -556,7 +531,7 @@ const letterHTML = `
   <p>cuman aku mikir sel, karena kalian bahas etika pertemanan, si abil tu ga ada masalah sama sekali sama zhua kan, tapi dia izin samaku sel pas diajak zhua pergi, padahal aku ga pernah minta itu bahkan aku fine” aja mau org ni temenan deket atau sering pergi juga aku ga masalah, tapi setelah ku jelasin dia ttp ga mau karena katanya dia ga terima kalau aku dijahatin sama kawanku itu, dan dia ga bisa nganggep kalau “ah dia ngelakuin itu ke si saka kok bukan ke aku”.<br>
   trs aku mikir, aku yg cuman ngejelasin ke kalian aja udah sakit hati karena balesannya, apalagi dia yg selama ini ngerasain ya sel? trs selama ini, setahun dia mendam itu semua sendirian karena ga mau ngerusak hubungan kita, aku masih tetap temenan sama kalian tanpa tau sama sekali apa yg udah kejadian, sedangkan dia jaga jarak sama kawanku itu karena aku, kan kek lucu kali gitu sel</p>
 
-  <p>padahal niatnya aku ga ada sampe kyk gitu loh sel, aku ga ada niatan buat ngelakuin hal yang sama, buat jaga jarak sama kalian, ga ada sama sekali aku kepikiran kyk gitu sel, aku cuman mau ngelurusin aja, tapi setelah ku jelasin, aku paham kenapa abil sampe blg ga mau berurusan lagi</p>
+  <p>padahal niatnya aku ga ada sampe kyk gitu sel, aku ga ada niatan buat ngelakuin hal yang sama, buat jaga jarak sama kalian, ga ada sama sekali aku kepikiran kyk gitu sel, aku cuman mau ngelurusin aja, tapi setelah ku jelasin, aku paham kenapa abil sampe blg ga mau berurusan lagi</p>
 
   <p>aku ga tau kedepannya bakal gimana, aku cmn bisa bilang, kalau kau ada butuh apa” bilang ya, kalau kau ada mau cerita apapun itu juga bilang aja ya, aku masih disini kalau kau lagi butuh 2 itu</p>
 
@@ -573,18 +548,16 @@ if (letterEl) letterEl.innerHTML = letterHTML;
 
 console.log("Total slides:", slides.length);
 
-// ✅ blok copy di bagian letter
 if (letterEl) {
   letterEl.addEventListener("copy", (e) => e.preventDefault());
   letterEl.addEventListener("cut", (e) => e.preventDefault());
-  letterEl.addEventListener("contextmenu", (e) => e.preventDefault()); // klik kanan / hold
+  letterEl.addEventListener("contextmenu", (e) => e.preventDefault());
 }
 
 document.addEventListener("visibilitychange", async () => {
   if (document.hidden) {
     if (bgm && !bgm.paused) bgm.pause();
   } else {
-    // balik ke safari → coba play lagi (kadang iPhone blok autoplay)
     try {
       if (bgm && bgm.src) await bgm.play();
     } catch (e) {}

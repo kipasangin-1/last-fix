@@ -1,12 +1,10 @@
 :root {
-  --text: #f7f2ea; /* putih hangat */
+  --text: #f7f2ea;
   --muted: rgba(247, 242, 234, 0.75);
   --line: rgba(255, 255, 255, 0.14);
 
-  /* ✅ card jadi soft coklat SOLID */
   --card: #8f6a53;
 
-  /* accent coklat susu / caramel */
   --accent: #d6a77a;
 
   --transition: 0.3s ease;
@@ -22,7 +20,6 @@ body {
   color: var(--text);
   line-height: 1.7;
 
-  /* soft coklat */
   background-color: #a97b5a;
 
   background-repeat: no-repeat;
@@ -36,7 +33,6 @@ body::before {
   position: fixed;
   inset: 0;
 
-  /* overlay coklat lembut */
   background: rgba(74, 45, 30, 0.55);
 
   pointer-events: none;
@@ -57,7 +53,6 @@ body::before {
   border-radius: 18px;
   padding: 28px 22px;
 
-  /* ✅ blur dimatiin biar solid */
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 
@@ -101,7 +96,6 @@ h1 {
   display: none !important;
 }
 
-/* Buttons */
 .music-buttons {
   display: flex;
   gap: 12px;
@@ -141,7 +135,6 @@ h1 {
   border: 1px solid rgba(56, 189, 248, 0.75);
 }
 
-/* Puzzle 4x4 */
 .puzzle {
   width: min(320px, 90vw);
   height: min(320px, 90vw);
@@ -175,7 +168,6 @@ h1 {
   transform: scale(1.05);
 }
 
-/* Modal */
 .modal {
   position: fixed;
   inset: 0;
@@ -189,7 +181,7 @@ h1 {
 
 .modal-card {
   width: min(420px, 92vw);
-  background: #8f6a53; /* ✅ solid juga */
+  background: #8f6a53;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 18px;
   padding: 22px 18px;
@@ -241,7 +233,6 @@ h1 {
   justify-content: center;
 }
 
-/* Carousel */
 .carousel {
   position: relative;
   margin: 18px auto 0;
@@ -340,7 +331,6 @@ h1 {
   margin: 18px 0;
 }
 
-/* Text */
 .letter {
   max-width: 72ch;
   margin: 0 auto;
@@ -366,7 +356,6 @@ h1 {
   opacity: 0.85;
 }
 
-/* ✅ HP FIX */
 @media (max-width: 768px) {
   html,
   body {
@@ -374,7 +363,7 @@ h1 {
   }
 
   .wrap {
-    padding: 30px 14px; /* lebih kecil biar ga geser */
+    padding: 30px 14px;
   }
 
   .card {
@@ -392,12 +381,11 @@ h1 {
     max-height: 60vh;
   }
 
-  /* ✅ KHUSUS CONTENT PAGE AJA: posisinya ke tengah layar */
   #contentPage.wrap {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* tengah vertikal */
+    justify-content: center;
   }
 }
 
@@ -406,16 +394,10 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* =========================
-   CUSTOM REQUESTS
-   ========================= */
-
-/* ✅ PUZZLE: turunin dikit */
 #puzzlePage {
   margin-top: 40px;
 }
 
-/* ✅ LETTER: 1 lapis putih solid, teks hitam */
 #letterPage.card {
   background: #ffffff !important;
   border: none !important;
@@ -427,25 +409,22 @@ body {
   color: #111111 !important;
 }
 
-/* ✅ biar text letter ga bisa dicopy */
 #letterPage .letter {
   -webkit-user-select: none;
   user-select: none;
-  -webkit-touch-callout: none; /* iPhone: hilangin menu copy */
+  -webkit-touch-callout: none;
 }
 
-/* ✅ FIX iPhone: background/card konten biar bener2 center */
 @media (max-width: 768px) {
   .carousel,
   .meta,
   .stage {
-    width: 100% !important; /* jangan vw */
-    max-width: 720px !important; /* atau sesuai yg kamu mau */
+    width: 100% !important;
+    max-width: 720px !important;
     margin-left: auto !important;
     margin-right: auto !important;
   }
 
-  /* extra: pastiin gak ada yg “narik” ke kanan */
   html,
   body {
     overflow-x: hidden;
@@ -454,7 +433,7 @@ body {
 
 @media (max-width: 768px) {
   #contentPage.card {
-    width: 100% !important; /* jangan 92vw */
+    width: 100% !important;
     max-width: 720px !important;
     margin-left: auto !important;
     margin-right: auto !important;
