@@ -248,12 +248,11 @@ if (nextBtn) {
     winModal.classList.add("hidden");
     winModal.style.display = "none";
 
-    // ✅ ke halaman baru dulu (bukan langsung carousel)
     puzzlePage.classList.add("hidden");
     if (afterPuzzlePage) afterPuzzlePage.classList.remove("hidden");
 
     window.scrollTo({ top: 0, behavior: "smooth" });
-    setBg("content.jpg"); // boleh tetap content.jpg atau bikin bg baru mis: after.jpg
+    setBg("content.jpg");
   });
 }
 
@@ -532,12 +531,22 @@ const letterHTML = `
 
   <p>sel aku ga ada niatan mau ngerusak liburan terakhir kita bisa balik ke medan, aku niatnya cuman mau ngelurusin aja sel, bahkan aku juga ngechat kawanku buat nanya alasan yg ternyata jawaban dia juga ga pernah ada dalam list kemungkinan” yg bakal dia sebutin</p>
 
-  <p>cuman aku mikir sel, karena kalian bahas etika pertemanan, si abil tu ga ada masalah sama sekali sama zhua kan, tapi dia izin samaku sel pas diajak zhua pergi, padahal aku ga pernah minta itu bahkan aku fine” aja mau org ni temenan deket atau sering pergi juga aku ga masalah, tapi setelah ku jelasin dia ttp ga mau karena katanya dia ga terima kalau aku dijahatin sama kawanku itu, dan dia ga bisa nganggep kalau “ah dia ngelakuin itu ke si saka kok bukan ke aku”.<br>
-  trs aku mikir, aku yg cuman ngejelasin ke kalian aja udah sakit hati karena balesannya, apalagi dia yg selama ini ngerasain ya sel? trs selama ini, setahun dia mendam itu semua sendirian karena ga mau ngerusak hubungan kita, aku masih tetap temenan sama kalian tanpa tau sama sekali apa yg udah kejadian, sedangkan dia jaga jarak sama kawanku itu karena aku, kan kek lucu kali gitu sel</p>
+  <p>cuman aku mikir sel, karena kalian bahas etika pertemanan, si abil tu ga ada masalah sama sekali sama zhua kan, tapi dia izin samaku sel pas diajak zhua pergi, padahal aku ga pernah minta itu bahkan aku fine” aja mau org ni temenan deket atau sering pergi juga aku ga masalah, tapi setelah ku jelasin dia ttp ga mau karena katanya dia ga terima kalau aku dijahatin sama kawanku itu, dan dia ga bisa nganggep kalau “ah dia ngelakuin itu ke si saka kok bukan ke aku”</p>
+  trs aku mikir, aku yg cuman ngejelasin ke kalian aja udah kek gitu, apalagi dia yg selama ini ngerasain ya sel? trs selama ini, setahun dia mendam itu semua sendirian karena ga mau ngerusak hubungan kita, aku masih tetap temenan sama kalian tanpa tau sama sekali apa yg udah kejadian, sedangkan dia jaga jarak sama kawanku itu karena aku, kan kek lucu kali gitu sel</p>
 
   <p>padahal niatnya aku ga ada sampe kyk gitu sel, aku ga ada niatan buat ngelakuin hal yang sama, buat jaga jarak sama kalian, ga ada sama sekali aku kepikiran kyk gitu sel, aku cuman mau ngelurusin aja, tapi setelah ku jelasin, aku paham kenapa abil sampe blg ga mau berurusan lagi</p>
+  <p>sebelumnya aku udah tau apa yg mau ku lakuin setelah aku tau dari pov dia gimana, tapi aku nanya ke kawanku dulu buat mastiin, dan setelah ku tanya ini respon org tu</p>
+  <img src="assets/letter/pe1.jpg" class="inline-photo" alt="foto 1" />
+   <img src="assets/letter/pe2.jpg" class="inline-photo" alt="foto 2" />
+   <img src="assets/letter/pe3.jpg" class="inline-photo" alt="foto 3" />
+   <img src="assets/letter/pe4.jpg" class="inline-photo" alt="foto 4" />
+   <p>aku nanya ke org ni karena aku tau kemaren aku masih marah pas baca chatnya, trs aku tau org ni selalu netral setiap aku cerita ttg apapun itu, makanya aku nanya saran ke org ini</p>
+   
+   <img src="assets/letter/pe5.jpg" class="inline-photo" alt="foto 4" />
+   <p>trs kemaren ini jawaban dari dia</p>
+   <p>kyk yg kau tau kan, ini kemungkinan liburan terakhir kita bisa balik ke medan, yg bener” liburan bukan yg balik ke medan buat lebaran atau hal lain, trs selama ini kita udah salah paham, jadi keknya cukup ini lah salah paham terakhir, bahkan kemaren aku langsung minta maaf ke pita karena selama ini aku taunya ya karena yg org ni berantem rupanya bukan, semoga kedepannya ga bakal ada kejadian kyk gini lagi ya sel (di pertemanan kita masing masing)</p>
+   <p>aku ga tau kedepannya bakal gimana, aku cmn bisa bilang, kalau kau ada butuh apa” bilang ya, kalau kau ada mau cerita apapun itu juga bilang aja ya, aku masih disini kalau kau lagi butuh 2 itu</p>
 
-  <p>aku ga tau kedepannya bakal gimana, aku cmn bisa bilang, kalau kau ada butuh apa” bilang ya, kalau kau ada mau cerita apapun itu juga bilang aja ya, aku masih disini kalau kau lagi butuh 2 itu</p>
 
   <p>aku tau selama kita temenan aku banyak salahnya, maaf ya sel, aku minta maaf atas semua kesalahan yg ku buat ntah itu sengaja ataupun ga sengaja, aku juga minta maaf kalau ketikanku ada yg salah, ntah itu yg kemaren ataupun yg skrg ini juga</p>
 

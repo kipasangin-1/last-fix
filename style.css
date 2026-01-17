@@ -439,3 +439,11 @@ body {
     margin-right: auto !important;
   }
 }
+
+.inline-photo {
+  width: 100%;
+  max-width: 420px;
+  display: block;
+  margin: 18px auto;
+  border-radius: 14px;
+}
