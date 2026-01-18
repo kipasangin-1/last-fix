@@ -521,7 +521,7 @@ const letterHTML = `
 
   <p>pas awal” kelas 10 aku ga pernah kepikiran kalau kita bakal jadi temen deket, ku kira aku bakal deket sama org repanda aja sampe tamat, dan kau jg bakal sama circlemu sampe tamat, trs tiba” pas kelas 11 udah ngalir gitu aja, aku lupa awal kita mulai deket karena apa, aku ingetnya yg kita pergi naik bus tayo itu sama dl ko pernah dah sesak kali mau kamar mandi trs minta temenin aku, tapi ko ga nutup pintu bangke, trs aku disitu kek “ni betolan rupanya aslinya anak ni semalu”in ini?”, habis tu aku ga inget tiba” udah deket aja kita.</p>
 
-  <p>padahal dulu kita semua seseru itu ya sel? sering nonton bareng, tiap pulang sekolah kalau bisa selalu pergi dulu, pantang pulang sblm kena telpon, sering mabar, tawaf keliling sekolah, dll</p>
+  <p>dulu kita semua seseru itu ya sel? sering nonton bareng, tiap pulang sekolah kalau bisa selalu pergi dulu, pantang pulang sblm kena telpon, sering mabar, tawaf keliling sekolah, dll</p>
 
   <p>kenapa sekarang malah jadi gini ya sel, kyknya dulu kita semua sefomo itu sampe ga mau ketinggalan 1x pergi pun, pokoknya selagi bisa ikut main harus ikut terus, sekarang walaupun beberapa masih ttp main tapi vibesnya udah agak beda</p>
 
@@ -552,7 +552,7 @@ const letterHTML = `
 
   <p>makasii banyak yaa sel, makasi karena udah nemenin aku pas aku lagi berantem sama kawanku, makasii banyak karena udah mau jadi temenku sel, makasii buat semua hal yg udah kau lakuin buat aku sel</p>
 
-  <p>i just wanna say thank u and sorry for everything, see u next time sel👋🏻</p>
+  <p>thank u and sorry for everything sel</p>
 
   <p>aku sengaja buat disini karena webnya bisa lgsg ku hapus pas dah ko baca😁</p>
 `;
