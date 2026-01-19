@@ -214,7 +214,7 @@ function checkWin() {
 
   if (solved) {
     modalShown = true;
-    if (status) status.textContent = "Udah lengkap.";
+    if (status) status.textContent = "ok cakep";
     showModal();
   } else {
     if (status) status.textContent = "";
@@ -521,7 +521,7 @@ const letterHTML = `
 
   <p>pas awal” kelas 10 aku ga pernah kepikiran kalau kita bakal jadi temen deket, ku kira aku bakal deket sama org repanda aja sampe tamat, dan kau jg bakal sama circlemu sampe tamat, trs tiba” pas kelas 11 udah ngalir gitu aja, aku lupa awal kita mulai deket karena apa, aku ingetnya yg kita pergi naik bus tayo itu sama dl ko pernah dah sesak kali mau kamar mandi trs minta temenin aku, tapi ko ga nutup pintu bangke, trs aku disitu kek “ni betolan rupanya aslinya anak ni semalu”in ini?”, habis tu aku ga inget tiba” udah deket aja kita.</p>
 
-  <p>dulu kita semua seseru itu ya sel? sering nonton bareng, tiap pulang sekolah kalau bisa selalu pergi dulu, pantang pulang sblm kena telpon, sering mabar, tawaf keliling sekolah, dll</p>
+  <p>dulu kita semua seseru itu ya sel? sering nonton bareng, tiap pulang sekolah selalu pergi dulu, pantang pulang sblm kena telpon, sering mabar, tawaf keliling sekolah, dll</p>
 
   <p>kenapa sekarang malah jadi gini ya sel, kyknya dulu kita semua sefomo itu sampe ga mau ketinggalan 1x pergi pun, pokoknya selagi bisa ikut main harus ikut terus, sekarang walaupun beberapa masih ttp main tapi vibesnya udah agak beda</p>
 
@@ -584,7 +584,7 @@ document.addEventListener("visibilitychange", async () => {
 
 const afterPuzzleHTML = `
   <p>eh sblmnya ni disclaimer dl yh</p>
-  <p>sebelum ku kirim samamu udah ku coba pake laptop sama hpku, kalau dia ngelag berarti salah hpmu</p>
+  <p>sebelum ku kirim samamu udah ku coba pake laptop sama hpku, sama pake hp yg lain jg, jadi kalau dia ngelag berarti salah hpmu</p>
   <p>trs kalau kau buka ini pake hp, pas video dia harus ko play dl baru mw mulai y</p>
 `;
 
