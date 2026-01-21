@@ -559,6 +559,8 @@ const letterHTML = `
 
   <p>thank u and sorry for everything sel</p>
 
+  <p>woi jangan gamon lagi ko</p>
+
   <p>aku sengaja buat disini karena webnya bisa lgsg ku hapus pas dah ko baca😁</p>
 `;
 
