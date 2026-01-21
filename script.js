@@ -537,16 +537,17 @@ const letterHTML = `
   <p>padahal niatnya aku ga ada sampe kyk gitu sel, aku ga ada niatan buat ngelakuin hal yang sama, buat jaga jarak sama kalian, ga ada sama sekali aku kepikiran kyk gitu sel, aku cuman mau ngelurusin aja, tapi setelah ku jelasin, aku paham kenapa abil sampe blg ga mau berurusan lagi</p>
   <p>sebelumnya aku udah tau apa yg mau ku lakuin setelah aku tau dari pov dia gimana, tapi aku nanya ke kawanku dulu buat mastiin, dan setelah ku tanya ini respon org tu</p>
    <img src="assets/letter/pe2.jpg" class="inline-photo" alt="foto 2" />
+   <p>aku nanya ke org ni karena aku tau kemaren aku masih marah pas baca chatnya, trs aku tau org ni selalu netral setiap aku cerita ttg apapun itu, makanya aku nanya saran ke org ini</p>
+
+   <p>dan ini respon org tu pas aku blg aku dpt chat yg dari si itu, makanya aku blg samamu aku ga mau ikut pergi lg kalau yg ramean</p>
    <img src="assets/letter/pe3.jpg" class="inline-photo" alt="foto 3" />
    <img src="assets/letter/pe4.jpg" class="inline-photo" alt="foto 4" />
-   <p>aku nanya ke org ni karena aku tau kemaren aku masih marah pas baca chatnya, trs aku tau org ni selalu netral setiap aku cerita ttg apapun itu, makanya aku nanya saran ke org ini</p>
    
-   <p>trs kemaren ini jawaban dari dia</p>
+   
+   <p>trs kemaren ini jawaban dari anaknya</p>
    <img src="assets/letter/pe5.jpg" class="inline-photo" alt="foto 4" />
 
-   <p>kemaren pas kau blg ini</p>
-   <img src="assets/letter/pe6.jpg" class="inline-photo" alt="foto 4" />
-   <p>aku dulu tu pernah kepikiran sel “gimana kalau selama ini aku yg jadi alasan org lain sakit hati, makanya skrg aku yg gantian", kln jangan sampe kyk gitu juga ya sel</p>
+   <p>aku dulu tu pernah kepikiran sel “gimana kalau selama ini aku yg jadi alasan org lain sakit hati, makanya skrg aku yg gantian", kln jangan sampe kyk gitu juga ya sel (aku bakal blg ke anaknya kalau kln udah minta maaf), aku tau kau tu baik sel, makanya cukup yg kemaren tu aja ya sel jangan ada lagi kedepannya</p>
 
    <p>kyk yg kau tau kan, ini kemungkinan liburan terakhir kita bisa balik ke medan, yg bener” liburan bukan yg balik ke medan buat lebaran atau hal lain, trs selama ini kita udah salah paham, jadi keknya cukup ini lah salah paham terakhir, bahkan kemaren aku langsung minta maaf ke pita karena selama ini aku taunya ya karena yg org ni berantem rupanya bukan, semoga kedepannya ga bakal ada kejadian kyk gini lagi ya sel (di pertemanan kita masing masing)</p>
    <p>aku ga tau kedepannya bakal gimana, aku cmn bisa bilang, kalau kau ada butuh apa” bilang ya, kalau kau ada mau cerita apapun itu juga bilang aja ya, aku masih disini kalau kau lagi butuh 2 itu</p>
@@ -556,7 +557,7 @@ const letterHTML = `
 
   <p>kau udah baikk bgtt samaku sel, makasii banyak yaa sell, makasii buat semua hal yang udah kau lakuin buat aku, makasii udah nemenin aku pas aku berantem sama kawanku, makasii juga udah nyadarin aku ttg si kawanku itu, makasii udah sering anter jemput aku tiap main, makasii buat semua hal yg ga bisa ku sebutin 1 1 disini, pokoknya makasii buat semuanya sel, thank you for staying and being my friend sel</p>
 
-  <p>thank u and sorry for everything</p>
+  <p>thank u and sorry for everything sel</p>
 
   <p>aku sengaja buat disini karena webnya bisa lgsg ku hapus pas dah ko baca😁</p>
 `;
@@ -584,7 +585,7 @@ document.addEventListener("visibilitychange", async () => {
 const afterPuzzleHTML = `
   <p>eh sblmnya ni disclaimer dl yh</p>
   <p>sebelum ku kirim samamu udah ku coba pake laptop sama hpku, sama pake hp yg lain jg, jadi kalau dia ngelag berarti salah hpmu</p>
-  <p>trs kalau kau buka ini pake hp, pas video dia harus ko play dl baru mw mulai y</p>
+  <p>trs yg video emg harus di play dl dia baru bisa, mls aku nambahin codingannya lagi hehe</p>
 `;
 
 if (afterPuzzleText) afterPuzzleText.innerHTML = afterPuzzleHTML;
